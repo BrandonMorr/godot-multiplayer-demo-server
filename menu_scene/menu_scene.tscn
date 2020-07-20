@@ -1,0 +1,65 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://menu_scene/menu_scene.gd" type="Script" id=1]
+
+[node name="Menu" type="Control"]
+anchor_top = 0.00235697
+anchor_right = 1.0
+anchor_bottom = 1.00236
+margin_top = -1.41418
+margin_bottom = -1.41418
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="LobbyPanel" type="Panel" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -164.0
+margin_top = -114.0
+margin_right = 164.0
+margin_bottom = 114.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerList" type="ItemList" parent="LobbyPanel"]
+anchor_left = 0.207317
+anchor_top = 0.236838
+anchor_right = 0.792683
+anchor_bottom = 0.710522
+margin_top = 0.000919342
+margin_bottom = 0.000915527
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="KickButton" type="Button" parent="LobbyPanel"]
+anchor_left = 0.3125
+anchor_top = 0.821429
+anchor_right = 0.6875
+anchor_bottom = 0.925595
+text = "Kick Player"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Label" type="Label" parent="LobbyPanel"]
+anchor_left = 0.284722
+anchor_top = 0.0666705
+anchor_right = 0.729611
+anchor_bottom = 0.125004
+margin_left = -1.9999
+margin_top = 3.99908
+margin_right = -2.12802
+margin_bottom = 3.99909
+text = "Server Lobby"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+[connection signal="pressed" from="LobbyPanel/KickButton" to="." method="_on_KickButton_pressed"]
