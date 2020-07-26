@@ -15,50 +15,48 @@ __meta__ = {
 }
 
 [node name="LobbyPanel" type="Panel" parent="."]
-anchor_left = 0.5
+anchor_left = 0.500691
 anchor_top = 0.5
-anchor_right = 0.5
+anchor_right = 0.500691
 anchor_bottom = 0.5
-margin_left = -164.0
-margin_top = -114.0
-margin_right = 164.0
-margin_bottom = 114.0
+margin_left = -160.708
+margin_top = -108.001
+margin_right = 159.292
+margin_bottom = 113.999
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PlayerList" type="ItemList" parent="LobbyPanel"]
-anchor_left = 0.207317
-anchor_top = 0.236838
-anchor_right = 0.792683
-anchor_bottom = 0.710522
-margin_top = 0.000919342
-margin_bottom = 0.000915527
+[node name="Label" type="Label" parent="LobbyPanel"]
+anchor_left = 0.3
+anchor_top = 0.108108
+anchor_right = 0.7
+anchor_bottom = 0.18018
+text = "Server Lobby"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": true
+}
+
+[node name="PlayerList" type="ItemList" parent="LobbyPanel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -128.0
+margin_top = -55.0
+margin_right = 128.0
+margin_bottom = 56.0
+__meta__ = {
+"_edit_use_anchors_": false
 }
 
 [node name="KickButton" type="Button" parent="LobbyPanel"]
-anchor_left = 0.3125
-anchor_top = 0.821429
-anchor_right = 0.6875
-anchor_bottom = 0.925595
+anchor_left = 0.3
+anchor_top = 0.833333
+anchor_right = 0.7
+anchor_bottom = 0.938596
 text = "Kick Player"
-__meta__ = {
-"_edit_use_anchors_": true
-}
-
-[node name="Label" type="Label" parent="LobbyPanel"]
-anchor_left = 0.284722
-anchor_top = 0.0666705
-anchor_right = 0.729611
-anchor_bottom = 0.125004
-margin_left = -1.9999
-margin_top = 3.99908
-margin_right = -2.12802
-margin_bottom = 3.99909
-text = "Server Lobby"
-align = 1
 __meta__ = {
 "_edit_use_anchors_": true
 }

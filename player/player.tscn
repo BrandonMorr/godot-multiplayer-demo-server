@@ -1,12 +1,16 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
+[ext_resource path="res://player/movement_manager.gd" type="Script" id=2]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.5
 
 [sub_resource type="CapsuleMesh" id=2]
 radius = 0.5
+
+[sub_resource type="CubeMesh" id=3]
+size = Vector3( 1, 2, 1 )
 
 [node name="player" type="KinematicBody"]
 script = ExtResource( 1 )
@@ -15,10 +19,21 @@ script = ExtResource( 1 )
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 1, 0 )
 shape = SubResource( 1 )
 
+[node name="Graphics" type="Spatial" parent="."]
+
+[node name="Capsule" type="MeshInstance" parent="Graphics"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1, 0 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Cube" type="MeshInstance" parent="Graphics"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+visible = false
+mesh = SubResource( 3 )
+material/0 = null
+
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0 )
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 1, 0 )
-mesh = SubResource( 2 )
-material/0 = null
+[node name="MovementManager" type="Spatial" parent="."]
+script = ExtResource( 2 )

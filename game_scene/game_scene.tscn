@@ -47,3 +47,5 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 20 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -20 )
 
 [node name="Players" type="Node" parent="."]
+
+[node name="Timers" type="Node" parent="."]

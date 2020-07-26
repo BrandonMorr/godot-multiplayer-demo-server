@@ -20,6 +20,14 @@ func _ready():
 	create_server()
 
 
+# create a server, called on startup
+func create_server():
+	var peer = NetworkedMultiplayerENet.new()
+	peer.create_server(DEFAULT_PORT, MAX_CONNECTIONS)
+	
+	get_tree().set_network_peer(peer)
+
+
 # callback when peer has connected to server
 func _on_player_connected(player_id: int):
 	print("client ", player_id, " connected")
@@ -33,14 +41,6 @@ func _on_player_disconnected(player_id: int):
 		unregister_player(player_id)
 	
 	print("client ", player_id, " disconnected")
-
-
-# create a server, called on startup
-func create_server():
-	var peer = NetworkedMultiplayerENet.new()
-	peer.create_server(DEFAULT_PORT, MAX_CONNECTIONS)
-	
-	get_tree().set_network_peer(peer)
 
 
 # register new player with server
@@ -67,20 +67,21 @@ remote func register_player(new_player_name: String):
 		for player_id in players:
 			if player_id != caller_id:
 				game.rpc_id(player_id, "add_player", caller_id)
-		
-		rpc_id(caller_id, "pre_start_game")
 
 
 func unregister_player(player_id: int):
-	players.erase(player_id)
+	if players.has(player_id):
+		players.erase(player_id)
+	
+	rpc("unregister_player", player_id)
 	
 	emit_signal("players_updated")
 	
 	# if a game is in progress, remove player from game
 	if has_node("/root/Game"):
-		var game_players = get_node("/root/Game/Players").get_children()
+		var _players = get_node("/root/Game/Players").get_children()
 		
-		for player in game_players:
+		for player in _players:
 			if player.name == str(player_id):
 				# tell everyone to remove the player from their game
 				var game = get_node("/root/Game")
@@ -88,20 +89,17 @@ func unregister_player(player_id: int):
 				game.rpc("remove_player", player_id)
 
 
-# receieved when a player has been kicked by the server
+# called when a player is kicked by the server
 func kick_player(player_id: int):
 	rpc_id(player_id, "player_kicked")
-	
-	if players.has(player_id):
-		rpc("unregister_player", player_id)
+	unregister_player(player_id)
 	
 	print("client ", player_id, " kicked from the game")
 
 
 # receieved when a player has left the game
 remote func player_left(player_id: int):
-	if players.has(player_id):
-		rpc("unregister_player", player_id)
+	unregister_player(player_id)
 	
 	print("client ", player_id, " left the game")
 
@@ -122,11 +120,7 @@ func pre_start_game():
 	get_node("/root/Menu").hide()
 	
 	var game = load("res://game_scene/game_scene.tscn").instance()
-	get_tree().get_root().add_child(game)
-	game.add_players()
-	
-	for player_id in players:
-		rpc_id(player_id, "pre_start_game")
+	get_node("/root").add_child(game)
 
 
 # notify caller to add players to game
@@ -135,6 +129,7 @@ remote func post_start_game():
 	
 	var game = get_node("/root/Game")
 	game.rpc_id(caller_id, "add_players", players)
+	game.spawn_player(caller_id)
 
 
 func end_game():
@@ -145,6 +140,7 @@ func end_game():
 # return an array of player names
 func get_player_names() -> Array:
 	return players.values()
+
 
 # return an array of player IDs
 func get_player_ids() -> Array:

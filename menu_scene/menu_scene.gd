@@ -1,6 +1,5 @@
 extends Control
 
-onready var Player = load("res://player/player.tscn")
 onready var player_list = $LobbyPanel/PlayerList
 
 func _ready():
